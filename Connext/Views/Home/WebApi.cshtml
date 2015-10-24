@@ -1,0 +1,46 @@
+﻿
+<h2 class="bs-docs-featurette-title">REST API</h2>
+<p class="lead">This is the back-end. Project implement with ASP.NET Web API + Entity Framework.</p>
+
+<hr class="half-rule">
+
+<div class="row">
+    <div class="col-sm-4">
+        <h3>User</h3>
+        <p>public class <b>UserModel</b><br />
+        {<br />
+            int Id <br />
+            string FirstName <br />
+            string Lastname <br />
+            string Email <br />
+            string Password <br />
+            <b>AgencyModel</b> Agency<br />
+            string Description<br />
+        }<br />
+        </p>
+        <p>What you can do : <br />Try <br /><b>GET</b> /api/users/ <br /><b>GET</b> /api/users/{id-here} <br /><b>POST</b> /api/users/ with JSON Object</p>
+    </div>
+    <div class="col-sm-4">
+        <h3>Agency</h3>
+        <p>
+        public class <b>AgencyModel</b><br />
+        {<br />
+            int Id <br />
+            string Name <br />
+            decimal Latitude <br />
+            decimal Longitude <br />
+        }<br /><br /><br /><br />
+        </p>
+        <p>What you can do : <br />Try <br /><b>GET</b> /api/agencies/ <br /><b>GET</b> /api/agencies/{id-here} <br /><b>POST</b> /api/agencies/ with JSON Object</p>
+    </div>
+    <div class="col-sm-4">
+        <h3>...</h3>
+        <p>Not implement yet</p>
+    </div>
+</div>
+
+<hr class="half-rule">
+
+<p class="lead">Hosted on Azure.</p>
+
+
