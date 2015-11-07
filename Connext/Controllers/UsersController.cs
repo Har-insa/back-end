@@ -7,6 +7,7 @@ using System.Web.Http;
 using ConnextBusinessLayer.Bdd;
 using ConnextBusinessLayer.Managers;
 using Connext.Models;
+using System.Web;
 
 namespace Connext.Controllers
 {
@@ -17,6 +18,10 @@ namespace Connext.Controllers
         // GET api/values
         public List<UserLiteModel> Get()
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
             List<UserLiteModel> listModel = new List<UserLiteModel>();
             foreach(USER user in manager.getList())
             {
@@ -28,12 +33,20 @@ namespace Connext.Controllers
         // GET api/values/5
         public UserModel Get(int id)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
             return new UserModel(manager.get(1));
         }
 
         // POST api/values
         public string Post(UserModel model)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
             USER objBdd = new USER();
             objBdd.FIRST_NAME = model.FirstName;
             objBdd.LAST_NAME = model.Lastname;
@@ -48,11 +61,19 @@ namespace Connext.Controllers
         // PUT api/values/5
         public void Put(int id, [FromBody]string value)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
         }
     }
 }

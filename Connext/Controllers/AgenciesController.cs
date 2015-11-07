@@ -8,6 +8,7 @@ using ConnextBusinessLayer.Bdd;
 using ConnextBusinessLayer.Managers;
 using Connext.Models;
 using System.Web.Http.ModelBinding;
+using System.Web;
 
 namespace Connext.Controllers
 {
@@ -16,31 +17,52 @@ namespace Connext.Controllers
 
         private AgencyManager manager = new AgencyManager();
         // GET api/values
-        public List<AgencyModel> Get()
+        public List<AgencyLiteModel> Get()
         {
-            List<AgencyModel> listModel = new List<AgencyModel>();
-            foreach(AGENCY agency in manager.getList())
+            if(HttpContext.Current.Request.Headers["Authorization"] == null)
             {
-                listModel.Add(new AgencyModel(agency));
+                List<AgencyLiteModel> listLiteModel = new List<AgencyLiteModel>();
+                foreach (AGENCY agency in manager.getList())
+                {
+                    listLiteModel.Add(new AgencyLiteModel(agency));
+                }
+                return listLiteModel;
             }
-            return listModel;
+            else
+            {
+                List<AgencyLiteModel> listModel = new List<AgencyLiteModel>();
+                foreach (AGENCY agency in manager.getList())
+                {
+                    listModel.Add(new AgencyModel(agency));
+                }
+                return listModel;
+            }
         }
 
         // GET api/values/5
         public AgencyModel Get(int id)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
             return new AgencyModel(manager.get(1));
         }
 
         // POST api/values
         public string Post(AgencyModel model)
         {
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+            }
+            string token = HttpContext.Current.Request.Headers["Authorization"];
             AGENCY objBdd = new AGENCY();
             objBdd.NAME = model.Name;
             objBdd.LATITUDE = model.Latitude;
             objBdd.LONGITUDE = model.Longitude;
             manager.add(objBdd);
-            return "done!";
+            return "done";
         }
 
         // PUT api/values/5

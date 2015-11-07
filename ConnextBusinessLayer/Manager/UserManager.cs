@@ -20,7 +20,7 @@ namespace ConnextBusinessLayer.Managers
                 return Context.USERs.ToList();
 #endif
             }
-            catch (Exception ex)
+            catch
             {
 #if DEBUG
                 throw new Exception("Impossible de récupérer la liste des utilisateurs." + Environment.NewLine + ex.StackTrace);
@@ -29,6 +29,13 @@ namespace ConnextBusinessLayer.Managers
 
 #endif
             }
+        }
+
+        public bool checkUser(string email, string password)
+        {
+            if (Context.USERs.First(u => u.EMAIL == email && u.PASSWORD == password) != null)
+                return true;
+            return false;        
         }
 
         public USER get(int Id)
@@ -57,7 +64,7 @@ namespace ConnextBusinessLayer.Managers
                 Context.USERs.Add(user);
                 Context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
 #if DEBUG
                 throw new Exception("Impossible de ajouter l'utilisateur." + Environment.NewLine + ex.StackTrace);
@@ -76,7 +83,7 @@ namespace ConnextBusinessLayer.Managers
                 Context.USERs.Remove(user);
                 Context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
 #if DEBUG
                 throw new Exception("Impossible de supprimer l'utilisateur." + Environment.NewLine + ex.StackTrace);
@@ -96,7 +103,7 @@ namespace ConnextBusinessLayer.Managers
                 Context.Entry(user).State = EntityState.Modified;
                 Context.SaveChanges();
             }
-            catch (Exception ex)
+            catch
             {
 #if DEBUG
                 throw new Exception("Impossible de modifier l'utilisateur." + Environment.NewLine + ex.StackTrace);

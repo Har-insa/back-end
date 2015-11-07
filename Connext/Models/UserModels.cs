@@ -51,4 +51,12 @@ namespace Connext.Models
             Description = objBdd.DESCRIPTION;
         }
     }
+    public class TokenModel
+    {
+        public string token { get; set; }
+        public TokenModel(string token)
+        {
+            this.token = token;
+        }
+    }
 }
