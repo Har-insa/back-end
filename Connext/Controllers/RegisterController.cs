@@ -33,7 +33,7 @@ namespace Connext.Controllers
             }
             catch
             {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             throw new HttpResponseException(HttpStatusCode.Unauthorized);
         }

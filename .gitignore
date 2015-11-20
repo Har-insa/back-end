@@ -213,3 +213,6 @@ ModelManifest.xml
 
 #Web.Release.config
 Connext/Web.Release.config
+
+#Publish profiles files
+Connext/Connext/Properties/PublishProfiles/
