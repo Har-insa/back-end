@@ -1,0 +1,22 @@
+insahardis@connext
+Hardis2015
+
+POST /api/Users
+{
+"FirstName":"TestPost",
+"LastName":"TestPost",
+"Agency":
+	{
+	"Id":"1"
+	},
+"Email":"test@hardis.fr",
+"Password":"test",
+"Description":"test description"
+}
+
+POST /api/Agencies
+{
+"Name" : "Test",
+"Latitude" : "0.0",
+"Longitude" : "0.0"
+}
