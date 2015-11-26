@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Agencies\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -231,6 +232,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\WebApi.cshtml" />
+    <Content Include="Views\Home\CreerAgence.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnextBusinessLayer\ConnextBusinessLayer.csproj">
