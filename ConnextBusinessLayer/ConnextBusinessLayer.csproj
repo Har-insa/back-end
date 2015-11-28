@@ -51,7 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bdd\ACTION.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Bdd\AGENCY.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bdd\CATEGORY.cs">
       <DependentUpon>ConnextEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Bdd\ConnextEntity.Context.cs">
@@ -69,10 +75,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConnextEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Bdd\GROUP.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bdd\PUBLICATION.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bdd\REQUEST_TRAVEL.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bdd\SESSION.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Bdd\TRAVEL.cs">
+      <DependentUpon>ConnextEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Bdd\USER.cs">
       <DependentUpon>ConnextEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="Manager\ActionManager.cs" />
+    <Compile Include="Manager\RequestTravelManager.cs" />
+    <Compile Include="Manager\CategoryManager.cs" />
+    <Compile Include="Manager\PublicationManager.cs" />
+    <Compile Include="Manager\TravelManager.cs" />
+    <Compile Include="Manager\GroupManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Manager\AgencyManager.cs" />
     <Compile Include="Manager\BaseManager.cs" />

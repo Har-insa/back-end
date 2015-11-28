@@ -31,13 +31,67 @@ namespace ConnextBusinessLayer.Managers
             }
         }
 
-        public bool checkUser(string email, string password)
+        public string checkUser(string email, string password)
         {
-            if (Context.USERs.First(u => u.EMAIL == email && u.PASSWORD == password) != null)
-                return true;
-            return false;        
+            try {
+                USER user = (Context.USERs.First(u => u.EMAIL == email && u.PASSWORD == password));
+                if (user != null)
+                {
+                    return addSession(user.ID_USER);
+                }
+                return null;
+            } 
+            catch
+            {
+                throw new Exception("Impossible de vérifier l'utilisateur.");
+            }
+        }
+        public string addSession(int id_user)
+        {
+            try
+            {
+                Guid token = Guid.NewGuid();
+                SESSION userToken = new SESSION();
+                userToken.ID_USER = id_user;
+                userToken.TOKEN = token;
+                userToken.CREATION_DATE = DateTime.Now;
+                userToken.LAST_CONNECT_DATE = DateTime.Now;
+                Context.SESSIONs.Add(userToken);
+                Context.SaveChanges();
+                return Convert.ToBase64String(token.ToByteArray());
+            }
+            catch
+            {
+                throw new Exception("Impossible de créer la session.");
+            }
         }
 
+        public int getUserFromSession(Guid token)
+        {
+            try
+            {
+                return Context.SESSIONs.First(s => s.TOKEN == token).ID_USER;
+            }
+            catch
+            {
+                throw new Exception();
+            }
+        }
+        public void updateSession(int id_user, Guid token)
+        {
+            try
+            {
+                SESSION userToken = new SESSION();
+                userToken.ID_USER = id_user;
+                userToken.TOKEN = token;
+                userToken.CREATION_DATE = DateTime.Now;
+                userToken.LAST_CONNECT_DATE = DateTime.Now;
+            }
+            catch
+            {
+                throw new Exception("Impossible de créer la session.");
+            }
+        }
         public USER get(int Id)
         {
             try

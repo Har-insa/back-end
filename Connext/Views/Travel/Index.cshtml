@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ConnextBusinessLayer.Bdd.TRAVEL>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CAPACITY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPARTUREHOUR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ARRIVALHOUR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AGENCY.NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AGENCY1.NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PUBLICATION.TITLE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAPACITY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPARTUREHOUR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ARRIVALHOUR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AGENCY.NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AGENCY1.NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PUBLICATION.TITLE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_TRAVEL }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_TRAVEL }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_TRAVEL })
+        </td>
+    </tr>
+}
+
+</table>

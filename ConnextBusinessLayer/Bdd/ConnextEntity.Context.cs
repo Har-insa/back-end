@@ -25,7 +25,14 @@ namespace ConnextBusinessLayer.Bdd
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ACTION> ACTIONs { get; set; }
         public virtual DbSet<AGENCY> AGENCies { get; set; }
+        public virtual DbSet<CATEGORY> CATEGORies { get; set; }
+        public virtual DbSet<GROUP> GROUPs { get; set; }
+        public virtual DbSet<PUBLICATION> PUBLICATIONs { get; set; }
+        public virtual DbSet<REQUEST_TRAVEL> REQUEST_TRAVEL { get; set; }
+        public virtual DbSet<SESSION> SESSIONs { get; set; }
+        public virtual DbSet<TRAVEL> TRAVELs { get; set; }
         public virtual DbSet<USER> USERs { get; set; }
     }
 }

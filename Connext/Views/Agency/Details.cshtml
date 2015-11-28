@@ -1,0 +1,42 @@
+﻿@model ConnextBusinessLayer.Bdd.AGENCY
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AGENCY</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LATITUDE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LATITUDE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LONGITUDE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LONGITUDE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_AGENCY }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

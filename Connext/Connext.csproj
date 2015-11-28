@@ -130,7 +130,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Agencies\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -165,8 +164,22 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\ActionController.cs" />
+    <Compile Include="Controllers\ActionsController.cs" />
+    <Compile Include="Controllers\AgencyController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\PublicationController.cs" />
+    <Compile Include="Controllers\RequestTravelController.cs" />
+    <Compile Include="Controllers\TravelController.cs" />
+    <Compile Include="Controllers\TravelsController.cs" />
+    <Compile Include="Controllers\PublicationsController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RequestTravelsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AgenciesController.cs" />
@@ -174,6 +187,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\RequestTravelModels.cs" />
+    <Compile Include="Models\TravelModels.cs" />
+    <Compile Include="Models\CategoryModels.cs" />
+    <Compile Include="Models\PublicationModels.cs" />
+    <Compile Include="Models\GroupModels.cs" />
     <Compile Include="Models\AgencyModels.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +225,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Properties\PublishProfiles\Connext.pubxml" />
+    <None Include="Properties\PublishProfiles\Connext2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -222,6 +241,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
@@ -233,6 +253,47 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\WebApi.cshtml" />
     <Content Include="Views\Home\CreerAgence.cshtml" />
+    <Content Include="Views\Agency\Create.cshtml" />
+    <Content Include="Views\Agency\Delete.cshtml" />
+    <Content Include="Views\Agency\Details.cshtml" />
+    <Content Include="Views\Agency\Edit.cshtml" />
+    <Content Include="Views\Agency\Index.cshtml" />
+    <Content Include="Views\Travel\Create.cshtml" />
+    <Content Include="Views\Travel\Delete.cshtml" />
+    <Content Include="Views\Travel\Details.cshtml" />
+    <Content Include="Views\Travel\Edit.cshtml" />
+    <Content Include="Views\Travel\Index.cshtml" />
+    <Content Include="Views\Publication\Create.cshtml" />
+    <Content Include="Views\Publication\Delete.cshtml" />
+    <Content Include="Views\Publication\Details.cshtml" />
+    <Content Include="Views\Publication\Edit.cshtml" />
+    <Content Include="Views\Publication\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Home\BackOffice.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\RequestTravel\Create.cshtml" />
+    <Content Include="Views\RequestTravel\Delete.cshtml" />
+    <Content Include="Views\RequestTravel\Details.cshtml" />
+    <Content Include="Views\RequestTravel\Edit.cshtml" />
+    <Content Include="Views\RequestTravel\Index.cshtml" />
+    <Content Include="Views\Action\Create.cshtml" />
+    <Content Include="Views\Action\Delete.cshtml" />
+    <Content Include="Views\Action\Details.cshtml" />
+    <Content Include="Views\Action\Edit.cshtml" />
+    <Content Include="Views\Action\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnextBusinessLayer\ConnextBusinessLayer.csproj">

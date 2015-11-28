@@ -18,9 +18,9 @@ namespace Connext.Controllers
         {
             return View();
         }
-        public ActionResult creerAgence()
+        public ActionResult BackOffice()
         {
-            return View("CreerAgence", new ConnextBusinessLayer.Bdd.AGENCY()); 
+            return View(); 
         }
     }
 }
