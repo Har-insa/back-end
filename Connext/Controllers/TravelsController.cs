@@ -60,7 +60,7 @@ namespace Connext.Controllers
 
             PUBLICATION publicationBdd = new PUBLICATION();
 
-            string tokenString = HttpContext.Current.Request.Headers["Authorization"];
+            byte[] tokenString = Convert.FromBase64String(HttpContext.Current.Request.Headers["Authorization"]);
             UserManager userManager = new UserManager();
             publicationBdd.ID_USER = userManager.getUserFromSession(new Guid(tokenString));
             publicationBdd.TITLE = model.Publication.Title;
