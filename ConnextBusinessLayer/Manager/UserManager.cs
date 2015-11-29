@@ -116,6 +116,7 @@ namespace ConnextBusinessLayer.Managers
             try
             {
                 Context.USERs.Add(user);
+                Context.GROUPs.First(g => g.ID_GROUP == 1).USERs.Add(user);
                 Context.SaveChanges();
             }
             catch (Exception ex)
