@@ -44,19 +44,19 @@ namespace Connext.Controllers
         // POST api/values
         public string Post(AgencyModel model)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
 
         // PUT api/values/5
         public string Put(int id, AgencyModel model)
         {
-            return "Not implement yet!";
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public string Delete(int id)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
     }
 }

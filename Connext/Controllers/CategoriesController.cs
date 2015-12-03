@@ -23,12 +23,12 @@ namespace Connext.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-                List<CategoryModel> listLiteModel = new List<CategoryModel>();
-                foreach (CATEGORY agency in manager.getList())
-                {
-                    listLiteModel.Add(new CategoryModel(agency));
-                }
-                return listLiteModel;
+            List<CategoryModel> listLiteModel = new List<CategoryModel>();
+            foreach (CATEGORY agency in manager.getList())
+            {
+                listLiteModel.Add(new CategoryModel(agency));
+            }
+            return listLiteModel;
         }
 
         // GET api/values/5
@@ -39,34 +39,6 @@ namespace Connext.Controllers
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
             return new CategoryModel(manager.get(id));
-        }
-
-        // POST api/values
-        /*public string Post(AgencyModel model)
-        {
-            if (HttpContext.Current.Request.Headers["Authorization"] == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
-            string token = HttpContext.Current.Request.Headers["Authorization"];
-            AGENCY objBdd = new AGENCY();
-            objBdd.NAME = model.Name;
-            objBdd.LATITUDE = model.Latitude;
-            objBdd.LONGITUDE = model.Longitude;
-            manager.add(objBdd);
-            return "done";
-        }*/
-
-        // PUT api/values/5
-        public string Put(int id, AgencyModel model)
-        {
-            return "Not implement yet!";
-        }
-
-        // DELETE api/values/5
-        public string Delete(int id)
-        {
-            return "Don't do it please!";
         }
     }
 }

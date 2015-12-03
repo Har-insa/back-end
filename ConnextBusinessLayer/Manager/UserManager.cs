@@ -70,7 +70,7 @@ namespace ConnextBusinessLayer.Managers
         {
             try
             {
-                return Context.SESSIONs.First(s => s.TOKEN == token).ID_USER;
+                return Context.SESSIONs.Single(s => s.TOKEN == token).ID_USER;
             }
             catch
             {

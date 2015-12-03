@@ -41,29 +41,19 @@ namespace Connext.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            return new PublicationModel(manager.get(1));
+            return new PublicationModel(manager.get(id));
         }
-
-        // POST api/values
-        /*public string Post(PublicationModel model)
-        {
-            if (HttpContext.Current.Request.Headers["Authorization"] == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
-            return "done";
-        }*/
 
         // PUT api/values/5
         public string Put(int id, AgencyModel model)
         {
-            return "Not implement yet!";
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public string Delete(int id)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
     }
 }

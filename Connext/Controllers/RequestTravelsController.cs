@@ -46,7 +46,7 @@ namespace Connext.Controllers
         }
 
         // POST api/values
-        public string Post(RequestTravelModel model)
+        public HttpResponseMessage Post(RequestTravelModel model)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
@@ -57,27 +57,38 @@ namespace Connext.Controllers
             objBdd.ID_USER = model.IdUser;
             objBdd.ID_ACTION = 1;
             manager.add(objBdd);
-            return "done!";
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // PUT api/values/5
-        public string Put(int id, RequestTravelModel re)
+        public HttpResponseMessage Put(int id, RequestTravelModel re)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
             manager.modify(id, re.IdAction);
-            return "done!";
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
-            if (HttpContext.Current.Request.Headers["Authorization"] == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+            throw new NotImplementedException();
         }
     }
 }

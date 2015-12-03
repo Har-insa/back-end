@@ -45,7 +45,7 @@ namespace Connext.Controllers
         }
 
         // POST api/values
-        public string Post(GroupModel model)
+        public HttpResponseMessage Post(GroupModel model)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
@@ -55,11 +55,18 @@ namespace Connext.Controllers
             GROUP objBdd = new GROUP();
             objBdd.LABEL = model.Label;
             manager.add(objBdd);
-            return "done";
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // PUT api/values/5
-        public string Put(int id, ActionModel action)
+        public HttpResponseMessage Put(int id, ActionModel action)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
@@ -74,14 +81,21 @@ namespace Connext.Controllers
             {
                 manager.removeUser(id, action.Id);
             }
-            
-            return "done";
+
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // DELETE api/values/5
         public string Delete(int id)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
     }
 }

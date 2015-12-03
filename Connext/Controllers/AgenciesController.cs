@@ -46,11 +46,11 @@ namespace Connext.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            return new AgencyModel(manager.get(1));
+            return new AgencyModel(manager.get(id));
         }
 
         // POST api/values
-        public string Post(AgencyModel model)
+        public HttpResponseMessage Post(AgencyModel model)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
@@ -62,19 +62,26 @@ namespace Connext.Controllers
             objBdd.LATITUDE = model.Latitude;
             objBdd.LONGITUDE = model.Longitude;
             manager.add(objBdd);
-            return "done";
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // PUT api/values/5
         public string Put(int id, AgencyModel model)
         {
-            return "Not implement yet!";
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public string Delete(int id)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
     }
 }

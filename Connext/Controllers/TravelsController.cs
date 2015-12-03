@@ -16,7 +16,7 @@ namespace Connext.Controllers
     {
 
         private TravelManager manager = new TravelManager();
-        // GET api/values
+        // GET api/travels
         public List<TravelLiteModel> Get()
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
@@ -34,14 +34,14 @@ namespace Connext.Controllers
             }
         }
 
-        // GET api/values/5
+        // GET api/travels/5
         public TravelModel Get(int id)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            return new TravelModel(manager.get(1));
+            return new TravelModel(manager.get(id));
         }
 
         // POST api/values
@@ -68,7 +68,7 @@ namespace Connext.Controllers
             publicationBdd.DESCRIPTION = model.Publication.Description;
             publicationBdd.ID_GROUP = 1;
             publicationBdd.ID_CATEGORY = 1;
-            publicationBdd.DATE_TIME_CREATION = DateTime.Now;
+            publicationBdd.DATE_TIME_CREATION = DateTime.Now.AddHours(1);
 
 
             manager.add(travelBdd, publicationBdd);
@@ -85,13 +85,13 @@ namespace Connext.Controllers
         // PUT api/values/5
         public string Put(int id, RequestTravelModel model)
         {
-            return "Not implement yet!";
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public string Delete(int id)
         {
-            return "Don't do it please!";
+            throw new NotImplementedException();
         }
     }
 }
