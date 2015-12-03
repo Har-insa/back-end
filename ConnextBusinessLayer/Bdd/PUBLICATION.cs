@@ -26,6 +26,7 @@ namespace ConnextBusinessLayer.Bdd
         public string DESCRIPTION { get; set; }
         public int ID_CATEGORY { get; set; }
         public int ID_GROUP { get; set; }
+        public System.DateTime DATE_TIME_CREATION { get; set; }
     
         public virtual CATEGORY CATEGORY { get; set; }
         public virtual GROUP GROUP { get; set; }

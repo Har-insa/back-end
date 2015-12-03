@@ -46,6 +46,7 @@
           <Property Name="DESCRIPTION" Type="varchar" MaxLength="255" />
           <Property Name="ID_CATEGORY" Type="int" Nullable="false" />
           <Property Name="ID_GROUP" Type="int" Nullable="false" />
+          <Property Name="DATE_TIME_CREATION" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="REQUEST_TRAVEL">
           <Key>
@@ -433,6 +434,7 @@
           <NavigationProperty Name="GROUP" Relationship="connext_dbModel.FK_PUBLICATION_GROUP" FromRole="PUBLICATION" ToRole="GROUP" />
           <NavigationProperty Name="USER" Relationship="connext_dbModel.FK_PUBLICATION_USER" FromRole="PUBLICATION" ToRole="USER" />
           <NavigationProperty Name="TRAVELs" Relationship="connext_dbModel.FK_TRAVEL_PUBLICATION" FromRole="PUBLICATION" ToRole="TRAVEL" />
+          <Property Name="DATE_TIME_CREATION" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="REQUEST_TRAVEL">
           <Key>
@@ -670,6 +672,7 @@
           <EntitySetMapping Name="PUBLICATIONs">
             <EntityTypeMapping TypeName="connext_dbModel.PUBLICATION">
               <MappingFragment StoreEntitySet="PUBLICATION">
+                <ScalarProperty Name="DATE_TIME_CREATION" ColumnName="DATE_TIME_CREATION" />
                 <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
                 <ScalarProperty Name="ID_CATEGORY" ColumnName="ID_CATEGORY" />
                 <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
