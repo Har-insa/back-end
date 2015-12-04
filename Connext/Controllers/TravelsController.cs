@@ -60,35 +60,36 @@ namespace Connext.Controllers
             }
             else
             {
-                try {
-                TRAVEL travelBdd = new TRAVEL();
-                travelBdd.ID_ARRIVALAGENCY = model.ArrivalAgency.Id;
-                travelBdd.ID_DEPARTUREAGENCY = model.DepartureAgency.Id;
-                travelBdd.ARRIVALHOUR = model.ArrivalTime;
-                travelBdd.DEPARTUREHOUR = model.DepartureTime;
-                travelBdd.CAPACITY = model.Capacity;
-
-                PUBLICATION publicationBdd = new PUBLICATION();
-
-                string tokenString = HttpContext.Current.Request.Headers["Authorization"];
-                UserManager userManager = new UserManager();
-                publicationBdd.ID_USER = userManager.getUserFromSession(new Guid(tokenString));
-                publicationBdd.TITLE = model.Publication.Title;
-                publicationBdd.DESCRIPTION = model.Publication.Description;
-                publicationBdd.ID_GROUP = 1;
-                publicationBdd.ID_CATEGORY = 1;
-                publicationBdd.DATE_TIME_CREATION = DateTime.Now.AddHours(1);
-
-
-                manager.add(travelBdd, publicationBdd);
-                return new HttpResponseMessage()
+                try
                 {
-                    Content = new JsonContent(new
+                    TRAVEL travelBdd = new TRAVEL();
+                    travelBdd.ID_ARRIVALAGENCY = model.ArrivalAgency.Id;
+                    travelBdd.ID_DEPARTUREAGENCY = model.DepartureAgency.Id;
+                    travelBdd.ARRIVALHOUR = model.ArrivalTime;
+                    travelBdd.DEPARTUREHOUR = model.DepartureTime;
+                    travelBdd.CAPACITY = model.Capacity;
+
+                    PUBLICATION publicationBdd = new PUBLICATION();
+
+                    string tokenString = HttpContext.Current.Request.Headers["Authorization"];
+                    UserManager userManager = new UserManager();
+                    publicationBdd.ID_USER = userManager.getUserFromSession(new Guid(tokenString));
+                    publicationBdd.TITLE = model.Publication.Title;
+                    publicationBdd.DESCRIPTION = model.Publication.Description;
+                    publicationBdd.ID_GROUP = 1;
+                    publicationBdd.ID_CATEGORY = 1;
+                    publicationBdd.DATE_TIME_CREATION = DateTime.Now.AddHours(1);
+
+
+                    manager.add(travelBdd, publicationBdd);
+                    return new HttpResponseMessage()
                     {
-                        Success = true, //error
-                        Message = "Success" //return exception
-                    })
-                };
+                        Content = new JsonContent(new
+                        {
+                            Success = true, //error
+                            Message = "Success" //return exception
+                        })
+                    };
                 }
                 catch(Exception e)
                 {
