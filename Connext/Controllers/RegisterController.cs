@@ -29,7 +29,8 @@ namespace Connext.Controllers
                 objBdd.PASSWORD = model.Password;
                 objBdd.DESCRIPTION = "";
                 manager.add(objBdd);
-                return new TokenModel(Convert.ToBase64String(Guid.NewGuid().ToByteArray()));
+                Guid guid = Guid.NewGuid();
+                return new TokenModel(manager.addSession(objBdd.ID_USER));
             }
             catch
             {

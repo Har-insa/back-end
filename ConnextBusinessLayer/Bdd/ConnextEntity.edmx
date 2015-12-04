@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="connext_dbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACTION">
+          <Key>
+            <PropertyRef Name="ID_ACTION" />
+          </Key>
+          <Property Name="ID_ACTION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LIBELLE" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="AGENCY">
           <Key>
             <PropertyRef Name="ID_AGENCY" />
@@ -13,6 +20,64 @@
           <Property Name="NAME" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LATITUDE" Type="decimal" Precision="9" Scale="6" Nullable="false" />
           <Property Name="LONGITUDE" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID_CATEGORY" />
+          </Key>
+          <Property Name="ID_CATEGORY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TITLE" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="GROUP">
+          <Key>
+            <PropertyRef Name="ID_GROUP" />
+          </Key>
+          <Property Name="ID_GROUP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LABEL" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PUBLICATION">
+          <Key>
+            <PropertyRef Name="ID_PUBLICATION" />
+          </Key>
+          <Property Name="ID_PUBLICATION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USER" Type="int" Nullable="false" />
+          <Property Name="TITLE" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="255" />
+          <Property Name="ID_CATEGORY" Type="int" Nullable="false" />
+          <Property Name="ID_GROUP" Type="int" Nullable="false" />
+          <Property Name="DATE_TIME_CREATION" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REQUEST_TRAVEL">
+          <Key>
+            <PropertyRef Name="ID_REQUEST_TRAVEL" />
+          </Key>
+          <Property Name="ID_REQUEST_TRAVEL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_TRAVEL" Type="int" Nullable="false" />
+          <Property Name="ID_USER" Type="int" Nullable="false" />
+          <Property Name="ID_ACTION" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SESSION">
+          <Key>
+            <PropertyRef Name="ID_SESSION" />
+          </Key>
+          <Property Name="ID_SESSION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_USER" Type="int" Nullable="false" />
+          <Property Name="TOKEN" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CREATION_DATE" Type="datetime" Nullable="false" />
+          <Property Name="LAST_CONNECT_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRAVEL">
+          <Key>
+            <PropertyRef Name="ID_TRAVEL" />
+          </Key>
+          <Property Name="ID_TRAVEL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_DEPARTUREAGENCY" Type="int" Nullable="false" />
+          <Property Name="ID_ARRIVALAGENCY" Type="int" Nullable="false" />
+          <Property Name="CAPACITY" Type="int" Nullable="false" />
+          <Property Name="DEPARTUREHOUR" Type="datetime" Nullable="false" />
+          <Property Name="ARRIVALHOUR" Type="datetime" Nullable="false" />
+          <Property Name="ID_PUBLICATION" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -26,6 +91,134 @@
           <Property Name="ID_AGENCY" Type="int" Nullable="false" />
           <Property Name="DESCRIPTION" Type="varchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="USER_GROUP">
+          <Key>
+            <PropertyRef Name="ID_USER" />
+            <PropertyRef Name="ID_GROUP" />
+          </Key>
+          <Property Name="ID_USER" Type="int" Nullable="false" />
+          <Property Name="ID_GROUP" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PUBLICATION_CATEGORIE">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="PUBLICATION" Type="Self.PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID_CATEGORY" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PUBLICATION_GROUP">
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="1" />
+          <End Role="PUBLICATION" Type="Self.PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GROUP">
+              <PropertyRef Name="ID_GROUP" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PUBLICATION_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="PUBLICATION" Type="Self.PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REQUESTTRAVEL_ACTION">
+          <End Role="ACTION" Type="Self.ACTION" Multiplicity="1" />
+          <End Role="REQUEST_TRAVEL" Type="Self.REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTION">
+              <PropertyRef Name="ID_ACTION" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REQUESTTRAVEL_TRAVEL">
+          <End Role="TRAVEL" Type="Self.TRAVEL" Multiplicity="1" />
+          <End Role="REQUEST_TRAVEL" Type="Self.REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAVEL">
+              <PropertyRef Name="ID_TRAVEL" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_TRAVEL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REQUESTTRAVEL_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="REQUEST_TRAVEL" Type="Self.REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SESSION_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="SESSION" Type="Self.SESSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="SESSION">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_ARRIVALAGENCY">
+          <End Role="AGENCY" Type="Self.AGENCY" Multiplicity="1" />
+          <End Role="TRAVEL" Type="Self.TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCY">
+              <PropertyRef Name="ID_AGENCY" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_ARRIVALAGENCY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_DEPARTUREAGENCY">
+          <End Role="AGENCY" Type="Self.AGENCY" Multiplicity="1" />
+          <End Role="TRAVEL" Type="Self.TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCY">
+              <PropertyRef Name="ID_AGENCY" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_DEPARTUREAGENCY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_PUBLICATION">
+          <End Role="PUBLICATION" Type="Self.PUBLICATION" Multiplicity="1" />
+          <End Role="TRAVEL" Type="Self.TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLICATION">
+              <PropertyRef Name="ID_PUBLICATION" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_PUBLICATION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USER_AGENCY">
           <End Role="AGENCY" Type="Self.AGENCY" Multiplicity="1" />
           <End Role="USER" Type="Self.USER" Multiplicity="*" />
@@ -38,12 +231,92 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_USERGROUP_GROUP">
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="1" />
+          <End Role="USER_GROUP" Type="Self.USER_GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GROUP">
+              <PropertyRef Name="ID_GROUP" />
+            </Principal>
+            <Dependent Role="USER_GROUP">
+              <PropertyRef Name="ID_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERGROUP_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="USER_GROUP" Type="Self.USER_GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="USER_GROUP">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="connext_dbModelStoreContainer">
+          <EntitySet Name="ACTION" EntityType="Self.ACTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGENCY" EntityType="Self.AGENCY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GROUP" EntityType="Self.GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PUBLICATION" EntityType="Self.PUBLICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REQUEST_TRAVEL" EntityType="Self.REQUEST_TRAVEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SESSION" EntityType="Self.SESSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAVEL" EntityType="Self.TRAVEL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_GROUP" EntityType="Self.USER_GROUP" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PUBLICATION_CATEGORIE" Association="Self.FK_PUBLICATION_CATEGORIE">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PUBLICATION_GROUP" Association="Self.FK_PUBLICATION_GROUP">
+            <End Role="GROUP" EntitySet="GROUP" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PUBLICATION_USER" Association="Self.FK_PUBLICATION_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REQUESTTRAVEL_ACTION" Association="Self.FK_REQUESTTRAVEL_ACTION">
+            <End Role="ACTION" EntitySet="ACTION" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REQUESTTRAVEL_TRAVEL" Association="Self.FK_REQUESTTRAVEL_TRAVEL">
+            <End Role="TRAVEL" EntitySet="TRAVEL" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REQUESTTRAVEL_USER" Association="Self.FK_REQUESTTRAVEL_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SESSION_USER" Association="Self.FK_SESSION_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="SESSION" EntitySet="SESSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_ARRIVALAGENCY" Association="Self.FK_TRAVEL_ARRIVALAGENCY">
+            <End Role="AGENCY" EntitySet="AGENCY" />
+            <End Role="TRAVEL" EntitySet="TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_DEPARTUREAGENCY" Association="Self.FK_TRAVEL_DEPARTUREAGENCY">
+            <End Role="AGENCY" EntitySet="AGENCY" />
+            <End Role="TRAVEL" EntitySet="TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_PUBLICATION" Association="Self.FK_TRAVEL_PUBLICATION">
+            <End Role="PUBLICATION" EntitySet="PUBLICATION" />
+            <End Role="TRAVEL" EntitySet="TRAVEL" />
+          </AssociationSet>
           <AssociationSet Name="FK_USER_AGENCY" Association="Self.FK_USER_AGENCY">
             <End Role="AGENCY" EntitySet="AGENCY" />
             <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_GROUP" Association="Self.FK_USERGROUP_GROUP">
+            <End Role="GROUP" EntitySet="GROUP" />
+            <End Role="USER_GROUP" EntitySet="USER_GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERGROUP_USER" Association="Self.FK_USERGROUP_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="USER_GROUP" EntitySet="USER_GROUP" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -51,13 +324,72 @@
     <edmx:ConceptualModels>
       <Schema Namespace="connext_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="connext_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACTIONs" EntityType="connext_dbModel.ACTION" />
           <EntitySet Name="AGENCies" EntityType="connext_dbModel.AGENCY" />
+          <EntitySet Name="CATEGORies" EntityType="connext_dbModel.CATEGORY" />
+          <EntitySet Name="GROUPs" EntityType="connext_dbModel.GROUP" />
+          <EntitySet Name="PUBLICATIONs" EntityType="connext_dbModel.PUBLICATION" />
+          <EntitySet Name="REQUEST_TRAVEL" EntityType="connext_dbModel.REQUEST_TRAVEL" />
+          <EntitySet Name="SESSIONs" EntityType="connext_dbModel.SESSION" />
+          <EntitySet Name="TRAVELs" EntityType="connext_dbModel.TRAVEL" />
           <EntitySet Name="USERs" EntityType="connext_dbModel.USER" />
+          <AssociationSet Name="FK_REQUESTTRAVEL_ACTION" Association="connext_dbModel.FK_REQUESTTRAVEL_ACTION">
+            <End Role="ACTION" EntitySet="ACTIONs" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_ARRIVALAGENCY" Association="connext_dbModel.FK_TRAVEL_ARRIVALAGENCY">
+            <End Role="AGENCY" EntitySet="AGENCies" />
+            <End Role="TRAVEL" EntitySet="TRAVELs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_DEPARTUREAGENCY" Association="connext_dbModel.FK_TRAVEL_DEPARTUREAGENCY">
+            <End Role="AGENCY" EntitySet="AGENCies" />
+            <End Role="TRAVEL" EntitySet="TRAVELs" />
+          </AssociationSet>
           <AssociationSet Name="FK_USER_AGENCY" Association="connext_dbModel.FK_USER_AGENCY">
             <End Role="AGENCY" EntitySet="AGENCies" />
             <End Role="USER" EntitySet="USERs" />
           </AssociationSet>
+          <AssociationSet Name="FK_PUBLICATION_CATEGORIE" Association="connext_dbModel.FK_PUBLICATION_CATEGORIE">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PUBLICATION_GROUP" Association="connext_dbModel.FK_PUBLICATION_GROUP">
+            <End Role="GROUP" EntitySet="GROUPs" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PUBLICATION_USER" Association="connext_dbModel.FK_PUBLICATION_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="PUBLICATION" EntitySet="PUBLICATIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRAVEL_PUBLICATION" Association="connext_dbModel.FK_TRAVEL_PUBLICATION">
+            <End Role="PUBLICATION" EntitySet="PUBLICATIONs" />
+            <End Role="TRAVEL" EntitySet="TRAVELs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REQUESTTRAVEL_TRAVEL" Association="connext_dbModel.FK_REQUESTTRAVEL_TRAVEL">
+            <End Role="TRAVEL" EntitySet="TRAVELs" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REQUESTTRAVEL_USER" Association="connext_dbModel.FK_REQUESTTRAVEL_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="REQUEST_TRAVEL" EntitySet="REQUEST_TRAVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SESSION_USER" Association="connext_dbModel.FK_SESSION_USER">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="SESSION" EntitySet="SESSIONs" />
+          </AssociationSet>
+          <AssociationSet Name="USER_GROUP" Association="connext_dbModel.USER_GROUP">
+            <End Role="GROUP" EntitySet="GROUPs" />
+            <End Role="USER" EntitySet="USERs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ACTION">
+          <Key>
+            <PropertyRef Name="ID_ACTION" />
+          </Key>
+          <Property Name="ID_ACTION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LIBELLE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="REQUEST_TRAVEL" Relationship="connext_dbModel.FK_REQUESTTRAVEL_ACTION" FromRole="ACTION" ToRole="REQUEST_TRAVEL" />
+        </EntityType>
         <EntityType Name="AGENCY">
           <Key>
             <PropertyRef Name="ID_AGENCY" />
@@ -66,7 +398,82 @@
           <Property Name="NAME" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="LATITUDE" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
           <Property Name="LONGITUDE" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+          <NavigationProperty Name="TRAVELs" Relationship="connext_dbModel.FK_TRAVEL_ARRIVALAGENCY" FromRole="AGENCY" ToRole="TRAVEL" />
+          <NavigationProperty Name="TRAVELs1" Relationship="connext_dbModel.FK_TRAVEL_DEPARTUREAGENCY" FromRole="AGENCY" ToRole="TRAVEL" />
           <NavigationProperty Name="USERs" Relationship="connext_dbModel.FK_USER_AGENCY" FromRole="AGENCY" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID_CATEGORY" />
+          </Key>
+          <Property Name="ID_CATEGORY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PUBLICATIONs" Relationship="connext_dbModel.FK_PUBLICATION_CATEGORIE" FromRole="CATEGORY" ToRole="PUBLICATION" />
+        </EntityType>
+        <EntityType Name="GROUP">
+          <Key>
+            <PropertyRef Name="ID_GROUP" />
+          </Key>
+          <Property Name="ID_GROUP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LABEL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PUBLICATIONs" Relationship="connext_dbModel.FK_PUBLICATION_GROUP" FromRole="GROUP" ToRole="PUBLICATION" />
+          <NavigationProperty Name="USERs" Relationship="connext_dbModel.USER_GROUP" FromRole="GROUP" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="PUBLICATION">
+          <Key>
+            <PropertyRef Name="ID_PUBLICATION" />
+          </Key>
+          <Property Name="ID_PUBLICATION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USER" Type="Int32" Nullable="false" />
+          <Property Name="TITLE" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ID_CATEGORY" Type="Int32" Nullable="false" />
+          <Property Name="ID_GROUP" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CATEGORY" Relationship="connext_dbModel.FK_PUBLICATION_CATEGORIE" FromRole="PUBLICATION" ToRole="CATEGORY" />
+          <NavigationProperty Name="GROUP" Relationship="connext_dbModel.FK_PUBLICATION_GROUP" FromRole="PUBLICATION" ToRole="GROUP" />
+          <NavigationProperty Name="USER" Relationship="connext_dbModel.FK_PUBLICATION_USER" FromRole="PUBLICATION" ToRole="USER" />
+          <NavigationProperty Name="TRAVELs" Relationship="connext_dbModel.FK_TRAVEL_PUBLICATION" FromRole="PUBLICATION" ToRole="TRAVEL" />
+          <Property Name="DATE_TIME_CREATION" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="REQUEST_TRAVEL">
+          <Key>
+            <PropertyRef Name="ID_REQUEST_TRAVEL" />
+          </Key>
+          <Property Name="ID_REQUEST_TRAVEL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_TRAVEL" Type="Int32" Nullable="false" />
+          <Property Name="ID_USER" Type="Int32" Nullable="false" />
+          <Property Name="ID_ACTION" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ACTION" Relationship="connext_dbModel.FK_REQUESTTRAVEL_ACTION" FromRole="REQUEST_TRAVEL" ToRole="ACTION" />
+          <NavigationProperty Name="TRAVEL" Relationship="connext_dbModel.FK_REQUESTTRAVEL_TRAVEL" FromRole="REQUEST_TRAVEL" ToRole="TRAVEL" />
+          <NavigationProperty Name="USER" Relationship="connext_dbModel.FK_REQUESTTRAVEL_USER" FromRole="REQUEST_TRAVEL" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="SESSION">
+          <Key>
+            <PropertyRef Name="ID_SESSION" />
+          </Key>
+          <Property Name="ID_SESSION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_USER" Type="Int32" Nullable="false" />
+          <Property Name="TOKEN" Type="Guid" Nullable="false" />
+          <Property Name="CREATION_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LAST_CONNECT_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="USER" Relationship="connext_dbModel.FK_SESSION_USER" FromRole="SESSION" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="TRAVEL">
+          <Key>
+            <PropertyRef Name="ID_TRAVEL" />
+          </Key>
+          <Property Name="ID_TRAVEL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_DEPARTUREAGENCY" Type="Int32" Nullable="false" />
+          <Property Name="ID_ARRIVALAGENCY" Type="Int32" Nullable="false" />
+          <Property Name="CAPACITY" Type="Int32" Nullable="false" />
+          <Property Name="DEPARTUREHOUR" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ARRIVALHOUR" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_PUBLICATION" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AGENCY" Relationship="connext_dbModel.FK_TRAVEL_ARRIVALAGENCY" FromRole="TRAVEL" ToRole="AGENCY" />
+          <NavigationProperty Name="AGENCY1" Relationship="connext_dbModel.FK_TRAVEL_DEPARTUREAGENCY" FromRole="TRAVEL" ToRole="AGENCY" />
+          <NavigationProperty Name="PUBLICATION" Relationship="connext_dbModel.FK_TRAVEL_PUBLICATION" FromRole="TRAVEL" ToRole="PUBLICATION" />
+          <NavigationProperty Name="REQUEST_TRAVEL" Relationship="connext_dbModel.FK_REQUESTTRAVEL_TRAVEL" FromRole="TRAVEL" ToRole="REQUEST_TRAVEL" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -80,7 +487,47 @@
           <Property Name="ID_AGENCY" Type="Int32" Nullable="false" />
           <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AGENCY" Relationship="connext_dbModel.FK_USER_AGENCY" FromRole="USER" ToRole="AGENCY" />
+          <NavigationProperty Name="PUBLICATIONs" Relationship="connext_dbModel.FK_PUBLICATION_USER" FromRole="USER" ToRole="PUBLICATION" />
+          <NavigationProperty Name="REQUEST_TRAVEL" Relationship="connext_dbModel.FK_REQUESTTRAVEL_USER" FromRole="USER" ToRole="REQUEST_TRAVEL" />
+          <NavigationProperty Name="SESSIONs" Relationship="connext_dbModel.FK_SESSION_USER" FromRole="USER" ToRole="SESSION" />
+          <NavigationProperty Name="GROUPs" Relationship="connext_dbModel.USER_GROUP" FromRole="USER" ToRole="GROUP" />
         </EntityType>
+        <Association Name="FK_REQUESTTRAVEL_ACTION">
+          <End Type="connext_dbModel.ACTION" Role="ACTION" Multiplicity="1" />
+          <End Type="connext_dbModel.REQUEST_TRAVEL" Role="REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACTION">
+              <PropertyRef Name="ID_ACTION" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_ACTION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_ARRIVALAGENCY">
+          <End Type="connext_dbModel.AGENCY" Role="AGENCY" Multiplicity="1" />
+          <End Type="connext_dbModel.TRAVEL" Role="TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCY">
+              <PropertyRef Name="ID_AGENCY" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_ARRIVALAGENCY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_DEPARTUREAGENCY">
+          <End Type="connext_dbModel.AGENCY" Role="AGENCY" Multiplicity="1" />
+          <End Type="connext_dbModel.TRAVEL" Role="TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AGENCY">
+              <PropertyRef Name="ID_AGENCY" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_DEPARTUREAGENCY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USER_AGENCY">
           <End Type="connext_dbModel.AGENCY" Role="AGENCY" Multiplicity="1" />
           <End Type="connext_dbModel.USER" Role="USER" Multiplicity="*" />
@@ -93,12 +540,108 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_PUBLICATION_CATEGORIE">
+          <End Type="connext_dbModel.CATEGORY" Role="CATEGORY" Multiplicity="1" />
+          <End Type="connext_dbModel.PUBLICATION" Role="PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID_CATEGORY" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_CATEGORY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PUBLICATION_GROUP">
+          <End Type="connext_dbModel.GROUP" Role="GROUP" Multiplicity="1" />
+          <End Type="connext_dbModel.PUBLICATION" Role="PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GROUP">
+              <PropertyRef Name="ID_GROUP" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_GROUP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PUBLICATION_USER">
+          <End Type="connext_dbModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="connext_dbModel.PUBLICATION" Role="PUBLICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="PUBLICATION">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRAVEL_PUBLICATION">
+          <End Type="connext_dbModel.PUBLICATION" Role="PUBLICATION" Multiplicity="1" />
+          <End Type="connext_dbModel.TRAVEL" Role="TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLICATION">
+              <PropertyRef Name="ID_PUBLICATION" />
+            </Principal>
+            <Dependent Role="TRAVEL">
+              <PropertyRef Name="ID_PUBLICATION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REQUESTTRAVEL_TRAVEL">
+          <End Type="connext_dbModel.TRAVEL" Role="TRAVEL" Multiplicity="1" />
+          <End Type="connext_dbModel.REQUEST_TRAVEL" Role="REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAVEL">
+              <PropertyRef Name="ID_TRAVEL" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_TRAVEL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REQUESTTRAVEL_USER">
+          <End Type="connext_dbModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="connext_dbModel.REQUEST_TRAVEL" Role="REQUEST_TRAVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="REQUEST_TRAVEL">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SESSION_USER">
+          <End Type="connext_dbModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="connext_dbModel.SESSION" Role="SESSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID_USER" />
+            </Principal>
+            <Dependent Role="SESSION">
+              <PropertyRef Name="ID_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="USER_GROUP">
+          <End Type="connext_dbModel.GROUP" Role="GROUP" Multiplicity="*" />
+          <End Type="connext_dbModel.USER" Role="USER" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="connext_dbModelStoreContainer" CdmEntityContainer="connext_dbEntities">
+          <EntitySetMapping Name="ACTIONs">
+            <EntityTypeMapping TypeName="connext_dbModel.ACTION">
+              <MappingFragment StoreEntitySet="ACTION">
+                <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+                <ScalarProperty Name="ID_ACTION" ColumnName="ID_ACTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AGENCies">
             <EntityTypeMapping TypeName="connext_dbModel.AGENCY">
               <MappingFragment StoreEntitySet="AGENCY">
@@ -106,6 +649,70 @@
                 <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
                 <ScalarProperty Name="ID_AGENCY" ColumnName="ID_AGENCY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORies">
+            <EntityTypeMapping TypeName="connext_dbModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="ID_CATEGORY" ColumnName="ID_CATEGORY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GROUPs">
+            <EntityTypeMapping TypeName="connext_dbModel.GROUP">
+              <MappingFragment StoreEntitySet="GROUP">
+                <ScalarProperty Name="LABEL" ColumnName="LABEL" />
+                <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUBLICATIONs">
+            <EntityTypeMapping TypeName="connext_dbModel.PUBLICATION">
+              <MappingFragment StoreEntitySet="PUBLICATION">
+                <ScalarProperty Name="DATE_TIME_CREATION" ColumnName="DATE_TIME_CREATION" />
+                <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+                <ScalarProperty Name="ID_CATEGORY" ColumnName="ID_CATEGORY" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="ID_PUBLICATION" ColumnName="ID_PUBLICATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REQUEST_TRAVEL">
+            <EntityTypeMapping TypeName="connext_dbModel.REQUEST_TRAVEL">
+              <MappingFragment StoreEntitySet="REQUEST_TRAVEL">
+                <ScalarProperty Name="ID_ACTION" ColumnName="ID_ACTION" />
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="ID_TRAVEL" ColumnName="ID_TRAVEL" />
+                <ScalarProperty Name="ID_REQUEST_TRAVEL" ColumnName="ID_REQUEST_TRAVEL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SESSIONs">
+            <EntityTypeMapping TypeName="connext_dbModel.SESSION">
+              <MappingFragment StoreEntitySet="SESSION">
+                <ScalarProperty Name="LAST_CONNECT_DATE" ColumnName="LAST_CONNECT_DATE" />
+                <ScalarProperty Name="CREATION_DATE" ColumnName="CREATION_DATE" />
+                <ScalarProperty Name="TOKEN" ColumnName="TOKEN" />
+                <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+                <ScalarProperty Name="ID_SESSION" ColumnName="ID_SESSION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAVELs">
+            <EntityTypeMapping TypeName="connext_dbModel.TRAVEL">
+              <MappingFragment StoreEntitySet="TRAVEL">
+                <ScalarProperty Name="ID_PUBLICATION" ColumnName="ID_PUBLICATION" />
+                <ScalarProperty Name="ARRIVALHOUR" ColumnName="ARRIVALHOUR" />
+                <ScalarProperty Name="DEPARTUREHOUR" ColumnName="DEPARTUREHOUR" />
+                <ScalarProperty Name="CAPACITY" ColumnName="CAPACITY" />
+                <ScalarProperty Name="ID_ARRIVALAGENCY" ColumnName="ID_ARRIVALAGENCY" />
+                <ScalarProperty Name="ID_DEPARTUREAGENCY" ColumnName="ID_DEPARTUREAGENCY" />
+                <ScalarProperty Name="ID_TRAVEL" ColumnName="ID_TRAVEL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -122,6 +729,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="USER_GROUP" TypeName="connext_dbModel.USER_GROUP" StoreEntitySet="USER_GROUP">
+            <EndProperty Name="USER">
+              <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+            </EndProperty>
+            <EndProperty Name="GROUP">
+              <ScalarProperty Name="ID_GROUP" ColumnName="ID_GROUP" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

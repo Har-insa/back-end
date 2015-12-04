@@ -19,8 +19,11 @@ namespace Connext.Controllers
             if (model == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             try {
-                if (manager.checkUser(model.Email, model.Password))
-                    return new TokenModel(Convert.ToBase64String(Guid.NewGuid().ToByteArray()));
+                string token = manager.checkUser(model.Email, model.Password);
+                if (token != null)
+                {
+                    return new TokenModel(token);
+                }
             }
             catch
             {

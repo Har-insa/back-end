@@ -17,6 +17,8 @@ namespace ConnextBusinessLayer.Bdd
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AGENCY()
         {
+            this.TRAVELs = new HashSet<TRAVEL>();
+            this.TRAVELs1 = new HashSet<TRAVEL>();
             this.USERs = new HashSet<USER>();
         }
     
@@ -25,6 +27,10 @@ namespace ConnextBusinessLayer.Bdd
         public decimal LATITUDE { get; set; }
         public decimal LONGITUDE { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TRAVEL> TRAVELs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TRAVEL> TRAVELs1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER> USERs { get; set; }
     }

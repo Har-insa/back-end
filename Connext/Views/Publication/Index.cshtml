@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ConnextBusinessLayer.Bdd.PUBLICATION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CATEGORY.TITLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GROUP.LABEL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USER.FIRST_NAME)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DESCRIPTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CATEGORY.TITLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GROUP.LABEL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USER.FIRST_NAME)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_PUBLICATION }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_PUBLICATION }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_PUBLICATION })
+        </td>
+    </tr>
+}
+
+</table>

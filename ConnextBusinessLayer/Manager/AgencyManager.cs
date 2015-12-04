@@ -65,9 +65,9 @@ namespace ConnextBusinessLayer.Managers
             catch (Exception ex)
             {
 #if DEBUG
-                throw new Exception("Impossible de modifier le lieu." + Environment.NewLine + ex.StackTrace);
+                throw new Exception("Impossible de modifier l'agence." + Environment.NewLine + ex.StackTrace);
 #else
-        throw new Exception("Impossible de modifier le lieu.");
+        throw new Exception("Impossible de modifier l'agence.");
 
 #endif
             }

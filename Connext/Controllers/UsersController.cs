@@ -13,7 +13,6 @@ namespace Connext.Controllers
 {
     public class UsersController : ApiController
     {
-
         private UserManager manager = new UserManager();
         // GET api/values
         public List<UserLiteModel> Get()
@@ -37,11 +36,11 @@ namespace Connext.Controllers
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            return new UserModel(manager.get(1));
+            return new UserModel(manager.get(id));
         }
 
         // POST api/values
-        public string Post(UserModel model)
+        public HttpResponseMessage Post(UserModel model)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
@@ -55,25 +54,26 @@ namespace Connext.Controllers
             objBdd.PASSWORD = model.Password;
             objBdd.DESCRIPTION = model.Description;
             manager.add(objBdd);
-            return "done!";
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(new
+                {
+                    Success = true, //error
+                    Message = "Success" //return exception
+                })
+            };
         }
 
         // PUT api/values/5
         public void Put(int id, [FromBody]string value)
         {
-            if (HttpContext.Current.Request.Headers["Authorization"] == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+            throw new NotImplementedException();
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
-            if (HttpContext.Current.Request.Headers["Authorization"] == null)
-            {
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }
+            throw new NotImplementedException();
         }
     }
 }

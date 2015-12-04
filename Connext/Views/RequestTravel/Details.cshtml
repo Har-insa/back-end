@@ -1,0 +1,42 @@
+﻿@model ConnextBusinessLayer.Bdd.REQUEST_TRAVEL
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>REQUEST_TRAVEL</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ACTION.LIBELLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ACTION.LIBELLE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TRAVEL.ID_TRAVEL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TRAVEL.ID_TRAVEL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.FIRST_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.FIRST_NAME)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_REQUEST_TRAVEL }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

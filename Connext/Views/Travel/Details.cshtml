@@ -1,0 +1,66 @@
+﻿@model ConnextBusinessLayer.Bdd.TRAVEL
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TRAVEL</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CAPACITY)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CAPACITY)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DEPARTUREHOUR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DEPARTUREHOUR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ARRIVALHOUR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ARRIVALHOUR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AGENCY.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AGENCY.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AGENCY1.NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AGENCY1.NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PUBLICATION.TITLE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PUBLICATION.TITLE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_TRAVEL }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
