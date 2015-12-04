@@ -58,7 +58,7 @@ namespace ConnextBusinessLayer.Managers
                 userToken.LAST_CONNECT_DATE = DateTime.Now;
                 Context.SESSIONs.Add(userToken);
                 Context.SaveChanges();
-                return Convert.ToBase64String(token.ToByteArray());
+                return token.ToString();
             }
             catch
             {

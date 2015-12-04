@@ -19,6 +19,7 @@ namespace Connext.Controllers
         // GET api/travels
         public List<TravelLiteModel> Get()
         {
+            try { 
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
@@ -30,7 +31,13 @@ namespace Connext.Controllers
                 {
                     listLiteModel.Add(new TravelLiteModel(travel));
                 }
+                listLiteModel.Sort((x, y) => DateTime.Compare(y.Publication.DateTimeCreation, x.Publication.DateTimeCreation));
                 return listLiteModel;
+            }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.ToString());
             }
         }
 
@@ -47,39 +54,54 @@ namespace Connext.Controllers
         // POST api/values
         public HttpResponseMessage Post(TravelEditModel model)
         {
-            /*if (HttpContext.Current.Request.Headers["Authorization"] == null)
+            if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
-            }*/
-            TRAVEL travelBdd = new TRAVEL();
-            travelBdd.ID_ARRIVALAGENCY = model.ArrivalAgency.Id;
-            travelBdd.ID_DEPARTUREAGENCY = model.DepartureAgency.Id;
-            travelBdd.ARRIVALHOUR = model.ArrivalTime;
-            travelBdd.DEPARTUREHOUR = model.DepartureTime;
-            travelBdd.CAPACITY = model.Capacity;
-
-            PUBLICATION publicationBdd = new PUBLICATION();
-
-            /*byte[] tokenString = Convert.FromBase64String(HttpContext.Current.Request.Headers["Authorization"]);
-            UserManager userManager = new UserManager();
-            publicationBdd.ID_USER = userManager.getUserFromSession(new Guid(tokenString));*/
-            publicationBdd.ID_USER = 1;
-            publicationBdd.TITLE = model.Publication.Title;
-            publicationBdd.DESCRIPTION = model.Publication.Description;
-            publicationBdd.ID_GROUP = 1;
-            publicationBdd.ID_CATEGORY = 1;
-            publicationBdd.DATE_TIME_CREATION = DateTime.Now.AddHours(1);
-
-
-            manager.add(travelBdd, publicationBdd);
-            return new HttpResponseMessage()
+            }
+            else
             {
-                Content = new JsonContent(new
+                try {
+                TRAVEL travelBdd = new TRAVEL();
+                travelBdd.ID_ARRIVALAGENCY = model.ArrivalAgency.Id;
+                travelBdd.ID_DEPARTUREAGENCY = model.DepartureAgency.Id;
+                travelBdd.ARRIVALHOUR = model.ArrivalTime;
+                travelBdd.DEPARTUREHOUR = model.DepartureTime;
+                travelBdd.CAPACITY = model.Capacity;
+
+                PUBLICATION publicationBdd = new PUBLICATION();
+
+                string tokenString = HttpContext.Current.Request.Headers["Authorization"];
+                UserManager userManager = new UserManager();
+                publicationBdd.ID_USER = userManager.getUserFromSession(new Guid(tokenString));
+                publicationBdd.TITLE = model.Publication.Title;
+                publicationBdd.DESCRIPTION = model.Publication.Description;
+                publicationBdd.ID_GROUP = 1;
+                publicationBdd.ID_CATEGORY = 1;
+                publicationBdd.DATE_TIME_CREATION = DateTime.Now.AddHours(1);
+
+
+                manager.add(travelBdd, publicationBdd);
+                return new HttpResponseMessage()
                 {
-                    Success = true, //error
-                    Message = "Success" //return exception
-                })
-            };
+                    Content = new JsonContent(new
+                    {
+                        Success = true, //error
+                        Message = "Success" //return exception
+                    })
+                };
+                }
+                catch(Exception e)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(new
+                        {
+                            Success = false, //error
+                            Message = "Exception with token :" + HttpContext.Current.Request.Headers["Authorization"] + " Error :" + e.ToString() //return exception
+                        })
+                    };
+                }
+            }
         }
 
         // PUT api/values/5
