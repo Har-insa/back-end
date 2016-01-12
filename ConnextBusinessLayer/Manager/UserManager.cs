@@ -109,6 +109,23 @@ namespace ConnextBusinessLayer.Managers
             }
         }
 
+        public USER get(string email)
+        {
+            try
+            {
+                return Context.USERs.Single(l => l.EMAIL == email);
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw new Exception("Impossible de récupérer l'utilisateur." + Environment.NewLine + ex.StackTrace);
+#else
+                throw new Exception("Impossible de récupérer l'utilisateur.");
+
+#endif
+            }
+        }
+
 
 
         public void add(USER user)

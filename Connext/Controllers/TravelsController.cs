@@ -27,10 +27,20 @@ namespace Connext.Controllers
             else                
             {
                 List<TravelLiteModel> listLiteModel = new List<TravelLiteModel>();
-                foreach (TRAVEL travel in manager.getList())
-                {
-                    listLiteModel.Add(new TravelLiteModel(travel));
-                }
+                    if (HttpContext.Current.Request["id_user"] != null)
+                    {
+                        foreach (TRAVEL travel in manager.getListByUser(int.Parse(HttpContext.Current.Request["id_user"])))
+                        {
+                            listLiteModel.Add(new TravelLiteModel(travel));
+                        }
+                    }
+                    else
+                    {
+                        foreach (TRAVEL travel in manager.getList())
+                        {
+                            listLiteModel.Add(new TravelLiteModel(travel));
+                        }
+                    }
                 listLiteModel.Sort((x, y) => DateTime.Compare(y.Publication.DateTimeCreation, x.Publication.DateTimeCreation));
                 return listLiteModel;
             }

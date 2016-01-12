@@ -23,24 +23,34 @@ namespace Connext.Controllers
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
             List<RequestTravelModel> listModel = new List<RequestTravelModel>();
-            foreach(REQUEST_TRAVEL request in manager.getList())
+            if(HttpContext.Current.Request["id_user"] != null)
             {
-                listModel.Add(new RequestTravelModel(request));
+                foreach (REQUEST_TRAVEL request in manager.getListByUser(int.Parse(HttpContext.Current.Request["id_user"])))
+                {
+                    listModel.Add(new RequestTravelModel(request));
+                }
+            }
+            else
+            {
+                foreach (REQUEST_TRAVEL request in manager.getList())
+                {
+                    listModel.Add(new RequestTravelModel(request));
+                }
             }
             return listModel;
         }
 
         // GET api/values/5
-        public List<RequestTravelModel> Get(int id)
+        public List<RequestTravelWithUserModel> Get(int id)
         {
             if (HttpContext.Current.Request.Headers["Authorization"] == null)
             {
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
-            List<RequestTravelModel> listModel = new List<RequestTravelModel>();
+            List<RequestTravelWithUserModel> listModel = new List<RequestTravelWithUserModel>();
             foreach (REQUEST_TRAVEL request in manager.getList(id))
             {
-                listModel.Add(new RequestTravelModel(request));
+                listModel.Add(new RequestTravelWithUserModel(request));
             }
             return listModel;
         }

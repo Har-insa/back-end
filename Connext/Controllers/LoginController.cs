@@ -14,7 +14,7 @@ namespace Connext.Controllers
     {
 
         private UserManager manager = new UserManager();
-        public TokenModel Login(UserModel model)
+        public TokenWithUserBaseModel Login(UserModel model)
         {
             if (model == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -22,7 +22,7 @@ namespace Connext.Controllers
                 string token = manager.checkUser(model.Email, model.Password);
                 if (token != null)
                 {
-                    return new TokenModel(token);
+                    return new TokenWithUserBaseModel(token, manager.get(model.Email));
                 }
             }
             catch

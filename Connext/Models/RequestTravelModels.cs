@@ -23,6 +23,23 @@ namespace Connext.Models
             IdAction = objBdd.ID_ACTION;
         }
     }
+
+    public class RequestTravelWithUserModel
+    {
+        public int Id { get; set; }
+        public int IdTravel { get; set; }
+        public UserLiteModel User { get; set; }
+        public int IdAction { get; set; }
+        public RequestTravelWithUserModel() { }
+        public RequestTravelWithUserModel(REQUEST_TRAVEL objBdd)
+        {
+            Id = objBdd.ID_REQUEST_TRAVEL;
+            IdTravel = objBdd.ID_TRAVEL;
+            var userBdd = objBdd.USER;
+            User = new UserLiteModel(userBdd);
+            IdAction = objBdd.ID_ACTION;
+        }
+    }
     public class ActionRequestModel
     {
         public int Id { get; set; }

@@ -30,6 +30,24 @@ namespace ConnextBusinessLayer.Managers
             }
         }
 
+        public List<TRAVEL> getListByUser(int id_user)
+        {
+            try
+            {
+                var Context = new connext_dbEntities();
+                return Context.TRAVELs.Where(t => t.PUBLICATION.ID_USER == id_user).ToList();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw new Exception("Impossible de récupérer la liste des covoiturages." + Environment.NewLine + ex.StackTrace);
+#else
+                throw new Exception("Impossible de récupérer la liste des covoiturages.");
+
+#endif
+            }
+        }
+
         public TRAVEL get(int Id)
         {
             try

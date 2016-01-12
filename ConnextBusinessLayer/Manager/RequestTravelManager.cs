@@ -52,6 +52,24 @@ namespace ConnextBusinessLayer.Managers
             }
         }
 
+        public List<REQUEST_TRAVEL> getListByUser(int id_user)
+        {
+            try
+            {
+                var Context = new connext_dbEntities();
+                return Context.REQUEST_TRAVEL.Where(r => r.ID_USER == id_user).ToList();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw new Exception("Impossible de récupérer la liste des requests." + Environment.NewLine + ex.StackTrace);
+#else
+                throw new Exception("Impossible de récupérer la liste des requests.");
+
+#endif
+            }
+        }
+
         public REQUEST_TRAVEL get(int Id)
         {
             try

@@ -71,6 +71,16 @@ namespace Connext.Models
             Description = objBdd.DESCRIPTION;
         }
     }
+    public class TokenWithUserBaseModel
+    {
+        public string token { get; set; }
+        public UserBaseModel userInfo { get; set; }
+        public TokenWithUserBaseModel(string token, ConnextBusinessLayer.Bdd.USER objBdd)
+        {
+            this.token = token;
+            this.userInfo = new UserBaseModel(objBdd);
+        }
+    }
     public class TokenModel
     {
         public string token { get; set; }
