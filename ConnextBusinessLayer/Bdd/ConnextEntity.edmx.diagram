@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="55544f93588e4e42997c375929418bf1" Name="Diagram1" ZoomLevel="85">
-        <EntityTypeShape EntityType="connext_dbModel.ACTION" Width="1.5" PointX="15.875" PointY="1.375" />
-        <EntityTypeShape EntityType="connext_dbModel.AGENCY" Width="1.5" PointX="5.25" PointY="5.125" />
-        <EntityTypeShape EntityType="connext_dbModel.CATEGORY" Width="1.5" PointX="7.875" PointY="0.5" />
-        <EntityTypeShape EntityType="connext_dbModel.GROUP" Width="1.5" PointX="7.875" PointY="2.625" />
-        <EntityTypeShape EntityType="connext_dbModel.PUBLICATION" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="connext_dbModel.REQUEST_TRAVEL" Width="1.5" PointX="13.375" PointY="0.875" />
-        <EntityTypeShape EntityType="connext_dbModel.SESSION" Width="1.5" PointX="0.5" PointY="0.75" />
+      <Diagram DiagramId="55544f93588e4e42997c375929418bf1" Name="Diagram1" ZoomLevel="106">
+        <EntityTypeShape EntityType="connext_dbModel.ACTION" Width="1.5" PointX="8" PointY="5.625" />
+        <EntityTypeShape EntityType="connext_dbModel.AGENCY" Width="1.5" PointX="6" PointY="5.25" />
+        <EntityTypeShape EntityType="connext_dbModel.CATEGORY" Width="1.5" PointX="8.25" PointY="0.5" />
+        <EntityTypeShape EntityType="connext_dbModel.GROUP" Width="1.5" PointX="8.125" PointY="2.625" />
+        <EntityTypeShape EntityType="connext_dbModel.PUBLICATION" Width="1.5" PointX="6.125" PointY="0.75" />
+        <EntityTypeShape EntityType="connext_dbModel.REQUEST_TRAVEL" Width="1.5" PointX="10.125" PointY="5" />
+        <EntityTypeShape EntityType="connext_dbModel.SESSION" Width="1.5" PointX="4.125" PointY="5.375" />
         <EntityTypeShape EntityType="connext_dbModel.TRAVEL" Width="1.5" PointX="10.125" PointY="0.5" />
-        <EntityTypeShape EntityType="connext_dbModel.USER" Width="1.5" PointX="2.875" PointY="0.75" />
+        <EntityTypeShape EntityType="connext_dbModel.USER" Width="1.5" PointX="4" PointY="0.75" />
         <AssociationConnector Association="connext_dbModel.FK_REQUESTTRAVEL_ACTION" />
         <AssociationConnector Association="connext_dbModel.FK_TRAVEL_ARRIVALAGENCY" />
         <AssociationConnector Association="connext_dbModel.FK_TRAVEL_DEPARTUREAGENCY" />
